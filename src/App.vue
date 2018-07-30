@@ -3,39 +3,52 @@
     :store="store"
     :mapStateToProps="mapStateToProps"
     :mapDispatchToProps="mapDispatchToProps">
-    <template slot-scope="{increment, incrementAsync, count}">
-      <Counter
-        :count="count"
-        :increment="increment"
-        :incrementAsync="incrementAsync" />
-    </template>
+    <div slot-scope="props">
+      {{props.completedTodos}} of {{props.totalTodos}} todos are done!
+      <TodoList
+        :todosArray="props.todosArray"
+        :toggleDone="props.toggleDone"
+        :remove="props.remove"
+        :asyncRemove="props.asyncRemove"/>
+      <AddTodoForm :addTodo="props.addTodo" />
+    </div>
   </Provider>
 </template>
 
 <script>
   import Provider from 'vuejs-redux';
   import store from "./rematch";
-  import Counter from './components/Counter.vue';
+  import TodoList from './components/TodoList.vue';
+  import AddTodoForm from './components/AddTodoForm.vue';
 
-  // It's recommended to declare mapState and mapDispatch outside the component (as pure function)
-  // for easier tests.
-  const mapStateToProps = state => ({
-    count: state.count,
-  });
+  const mapStateToProps = state => {
+    const todosIds = Object.keys(state.todos)
+    return {
+      totalTodos: todosIds.length,
+      completedTodos: todosIds.filter(id => state.todos[id].done).length,
+      todosArray: todosIds.map(id => ({
+        ...state.todos[id],
+        id
+      }))
+    }
+  }
 
   const mapDispatchToProps = dispatch => ({
-    increment: dispatch.count.increment,
-    incrementAsync: dispatch.count.incrementAsync,
+    toggleDone: id => dispatch.todos.toggleDone(id),
+    remove: id => dispatch.todos.remove(id),
+    asyncRemove: id => dispatch.todos.asyncRemove(id),
+    addTodo: dispatch.todos.add
   })
 
   export default {
     components: {
       Provider,
-      Counter
+      TodoList,
+      AddTodoForm
     },
 
     data: () => ({
-      store // make it accessible in the template
+      store
     }),
 
     methods: {

@@ -1,17 +1,36 @@
 // function to create a one second delay
 const delay = (time) => new Promise(resolve => setTimeout(() => resolve(), time))
 
-export const count = {
-  state: 0,
+export const todos = {
+  state: {
+    1516344826871: { text: 'do stuff', done: true },
+    1516344852231: { text: 'do other stuff', done: false },
+  },
   reducers: {
-    increment (state, payload) {
-      return state + 1
+    toggleDone (state, id) {
+      const todo = { ...state[id], done: !state[id].done }
+      return {
+        ...state,
+        [id]: todo
+      }
+    },
+    add (state, text) {
+      return {
+        ...state,
+        [Date.now()]: { text, done: false }
+      }
+    },
+    remove (state, id) {
+      delete state[id]
+      return {
+        ...state
+      }
     }
   },
   effects: {
-    async incrementAsync (payload, state) {
+    async asyncRemove (id, state) {
       await delay(1000)
-      this.increment()
+      this.remove(id)
     }
   }
 }
