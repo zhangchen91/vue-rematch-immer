@@ -1,12 +1,20 @@
 <template>
-	<div id="app">
-		<router-view></router-view>
-	</div>
+  <Provider id="app" :store="store">
+    <router-view/>
+  </Provider>
 </template>
 
 <script>
+  import Provider from './components/Provider.vue'
+  import store from "./rematch"
 	export default {
-    name: 'app'
+    name: 'app',
+    components: {
+      Provider
+    },
+    data: () => ({
+      store
+    })
   }
 </script>
 

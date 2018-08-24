@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import Todos from '../provider/Todos.vue';
+  import Todos from './Todos.vue';
 
   export default {
     components: {

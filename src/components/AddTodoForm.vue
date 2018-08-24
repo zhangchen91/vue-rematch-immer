@@ -7,7 +7,7 @@
 
 <script>
   export default {
-    props: ["addTodo"],
+    props: ['addTodo'],
 
     data: () => ({
       text: ''
@@ -15,9 +15,9 @@
 
     methods: {
       handleSubmit (event) {
-        event.preventDefault();
-        this.addTodo(this.text);
-        this.text = "";
+        event.preventDefault()
+        this.addTodo(this.text)
+        this.text = ''
       }
     }
   }

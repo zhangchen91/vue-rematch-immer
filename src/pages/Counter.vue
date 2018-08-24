@@ -1,42 +1,36 @@
 <template>
-  <Provider
-    :store="store"
+  <Connect
     :mapStateToProps="mapStateToProps"
     :mapDispatchToProps="mapDispatchToProps">
     <Count slot-scope="props"
       :count="props.count"
       :increment="props.increment"
       :incrementAsync="props.incrementAsync" />
-  </Provider>
+  </Connect>
 </template>
 
 <script>
-import Provider from "vuejs-redux";
-import store from "../rematch";
-import Count from "../components/Count.vue";
+import Connect from '../components/Connect.vue'
+import Count from "../components/Count.vue"
 
 const mapStateToProps = state => ({
   count: state.counter
-});
+})
 
 const mapDispatchToProps = dispatch => ({
   increment: dispatch.counter.increment,
   incrementAsync: dispatch.counter.incrementAsync
-});
+})
 
 export default {
   components: {
-    Count,
-    Provider
+    Connect,
+    Count
   },
-
-  data: () => ({
-    store
-  }),
 
   methods: {
     mapStateToProps,
     mapDispatchToProps
   }
-};
+}
 </script>

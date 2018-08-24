@@ -1,7 +1,6 @@
 
 <template>
-  <Provider
-    :store="store"
+  <Connect
     :mapStateToProps="mapStateToProps"
     :mapDispatchToProps="mapDispatchToProps">
     <div slot-scope="props">
@@ -13,44 +12,40 @@
         :asyncRemove="props.asyncRemove"/>
       <AddTodoForm :addTodo="props.addTodo" />
     </div>
-  </Provider>
+  </Connect>
 </template>
 
 <script>
-  import Provider from 'vuejs-redux';
-  import store from "../rematch";
-  import TodoList from '../components/TodoList.vue';
-  import AddTodoForm from '../components/AddTodoForm.vue';
+  import Connect from '../components/Connect.vue'
+  import TodoList from '../components/TodoList.vue'
+  import AddTodoForm from '../components/AddTodoForm.vue'
 
   const mapStateToProps = state => {
     const todosIds = Object.keys(state.todos)
     return {
       totalTodos: todosIds.length,
       completedTodos: todosIds.filter(id => state.todos[id].done).length,
-      todosArray: todosIds.map(id => ({
-        ...state.todos[id],
-        id
-      }))
+      todosArray: todosIds.map(id => {
+        let todo = state.todos[id]
+        todo.id = id
+        return todo
+      })
     }
   }
 
   const mapDispatchToProps = dispatch => ({
-    toggleDone: id => dispatch.todos.toggleDone(id),
-    remove: id => dispatch.todos.remove(id),
-    asyncRemove: id => dispatch.todos.asyncRemove(id),
+    toggleDone: dispatch.todos.toggleDone,
+    remove: dispatch.todos.remove,
+    asyncRemove: dispatch.todos.asyncRemove,
     addTodo: dispatch.todos.add
   })
 
   export default {
     components: {
-      Provider,
+      Connect,
       TodoList,
       AddTodoForm
     },
-
-    data: () => ({
-      store
-    }),
 
     methods: {
       mapStateToProps,

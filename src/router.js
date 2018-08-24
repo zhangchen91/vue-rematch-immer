@@ -1,22 +1,22 @@
-import Vue from "vue";
-import Router from "vue-router";
-import todolist from "./pages/todolist";
-import counter from "./provider/Counter";
+import Vue from 'vue'
+import Router from 'vue-router'
+import index from './pages/index'
+import counter from './pages/Counter'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
-  mode: "history",
+  mode: 'history',
   routes: [
     {
-      path: "/",
-      name: "todolist",
-      component: todolist
+      path: '/',
+      name: 'index',
+      component: index
     },
     {
-      path: "/counter",
-      name: "counter",
+      path: '/counter',
+      name: 'counter',
       component: counter
     }
   ]
-});
+})
