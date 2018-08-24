@@ -2,7 +2,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-Vue.config.productionTip = false
+const isprod = process.env.NODE_ENV === 'production'
+
+Vue.config.productionTip = isprod
+Vue.config.performance = !isprod
 
 /* eslint-disable no-new */
 new Vue({

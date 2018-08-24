@@ -1,13 +1,13 @@
-<template>
+<template functional>
 	<div>
-		<button @click="increment">+1</button>
-		<button @click="incrementAsync">+1 async</button>
-		<h3>Count: {{ count }}</h3>
+		<button @click="props.increment">+1</button>
+		<button @click="props.incrementAsync">+1 async</button>
+		<h3>Count: {{ props.count }}</h3>
 	</div>
 </template>
 
 <script>
 export default {
-  props: ["increment", "incrementAsync", "count"]
+  props: ['increment', 'incrementAsync', 'count']
 };
 </script>
